@@ -3,7 +3,8 @@ import {
   ContactPhoneOutlined,
   PersonAddAlt1Outlined,
   LibraryAddCheckOutlined,
-  AccountCircleOutlined, SettingsOutlined
+  AccountCircleOutlined,
+  SettingsOutlined,
 } from '@mui/icons-material'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -26,67 +27,67 @@ const SideBar = () => {
         <div>
           <Link href={'/'}>
             <div className='hover:bg-padrao-green-light py-0.5 '>
-              <div className='text-lg text-padrao-blue flex items-center gap-2 m-4 '>
+              <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
                 <span>
                   <HomeOutlined />
                 </span>
-                <span className='font-medium'> Home </span>
+                <span className='font-normal'> Home </span>
               </div>
             </div>
           </Link>
 
           <Link href={'/pacientes'}>
             <div className='hover:bg-padrao-green-light py-0.5 '>
-              <div className='text-lg text-padrao-blue flex items-center gap-2 m-4 '>
+              <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
                 <span>
                   <ContactPhoneOutlined />
                 </span>
-                <span className='font-medium'> Pacientes </span>
+                <span className='font-normal'> Pacientes </span>
               </div>
             </div>
           </Link>
 
           <Link href={'/cadastro_pacientes'}>
             <div className='hover:bg-padrao-green-light py-0.5 '>
-              <div className='text-lg text-padrao-blue flex items-center gap-2 m-4 '>
+              <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
                 <span>
                   <PersonAddAlt1Outlined />
                 </span>
-                <span className='font-medium'> Cadastro Pacientes </span>
+                <span className='font-normal'> Cadastro Pacientes </span>
               </div>
             </div>
           </Link>
 
           <Link href={'/pendencias'}>
             <div className='hover:bg-padrao-green-light py-0.5 '>
-              <div className='text-lg text-padrao-blue flex items-center gap-2 m-4 '>
+              <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
                 <span>
                   <LibraryAddCheckOutlined />
                 </span>
-                <span className='font-medium'> Pendências </span>
+                <span className='font-normal'> Pendências </span>
               </div>
             </div>
           </Link>
         </div>
-        <div>
-          <hr></hr>
+        <div className='md:pb-3 pb-1'>
+          <hr />
           <Link href={'/perfil'}>
-            <div className='hover:bg-padrao-green-light pt-0.5 '>
-              <div className='text-lg text-padrao-blue flex items-center gap-2 m-4 '>
+            <div className='hover:bg-padrao-green-light py-0.5 '>
+              <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
                 <span>
                   <AccountCircleOutlined />
                 </span>
-                <span className='font-medium'> Perfil </span>
+                <span className='font-normal'> Perfil </span>
               </div>
             </div>
           </Link>
           <Link href={'/configuracoes'}>
-            <div className='hover:bg-padrao-green-light pb-0.5 '>
-              <div className='text-lg text-padrao-blue flex items-center gap-2 m-4 '>
+            <div className='hover:bg-padrao-green-light py-0.5 '>
+              <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
                 <span>
                   <SettingsOutlined />
                 </span>
-                <span className='font-medium'> Configurações </span>
+                <span className='font-normal'> Configurações </span>
               </div>
             </div>
           </Link>

@@ -7,7 +7,7 @@ const Home = () => {
         <title>Unitelecuidado</title>
       </Head>
       <main>
-        <p>Teste Unitelecuidado</p>
+       
       </main>
     </>
   )
