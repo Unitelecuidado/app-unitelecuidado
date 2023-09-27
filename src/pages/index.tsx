@@ -1,7 +1,16 @@
-export default function Home() {
+import Head from 'next/head'
+
+const Home = () => {
   return (
-    <main>
-      <p>Teste Unitelecuidado</p>
-    </main>
+    <>
+      <Head>
+        <title>Unitelecuidado</title>
+      </Head>
+      <main>
+        <p>Teste Unitelecuidado</p>
+      </main>
+    </>
   )
 }
+
+export default Home

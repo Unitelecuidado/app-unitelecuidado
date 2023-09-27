@@ -27,6 +27,12 @@ const config: Config = {
         '94vh': '94vh',
         '96vh': '96vh',
       },
+      colors: {
+        'padrao-blue': '#184066',
+        'padrao-green-light': '#DEE7CB',
+        'padrao-green': '#ABBF8A',
+        'padrao-gray': '#EAEEF0',
+      },
     },
   },
   plugins: [],
