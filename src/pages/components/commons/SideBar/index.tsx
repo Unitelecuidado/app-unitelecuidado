@@ -3,6 +3,7 @@ import {
   ContactPhoneOutlined,
   PersonAddAlt1Outlined,
   LibraryAddCheckOutlined,
+  AccountCircleOutlined, SettingsOutlined
 } from '@mui/icons-material'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -73,7 +74,7 @@ const SideBar = () => {
             <div className='hover:bg-padrao-green-light pt-0.5 '>
               <div className='text-lg text-padrao-blue flex items-center gap-2 m-4 '>
                 <span>
-                  <HomeOutlined />
+                  <AccountCircleOutlined />
                 </span>
                 <span className='font-medium'> Perfil </span>
               </div>
@@ -83,7 +84,7 @@ const SideBar = () => {
             <div className='hover:bg-padrao-green-light pb-0.5 '>
               <div className='text-lg text-padrao-blue flex items-center gap-2 m-4 '>
                 <span>
-                  <HomeOutlined />
+                  <SettingsOutlined />
                 </span>
                 <span className='font-medium'> Configurações </span>
               </div>
