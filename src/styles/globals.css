@@ -2,12 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
   font-family: 'Gotham';
   src: url('/fonts/GothamBook.ttf') format('truetype');
 }
 
 body {
-  background-color: #F0F0F0;
+  background-color: #f0f0f0;
 }
