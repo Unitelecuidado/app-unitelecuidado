@@ -25,7 +25,7 @@ const SideBar = () => {
       </div>
       <nav className='flex flex-col justify-between h-full'>
         <div>
-          <Link href={'/'}>
+          <Link href={'/home'}>
             <div className='hover:bg-padrao-green-light py-0.5 '>
               <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
                 <span>

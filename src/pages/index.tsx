@@ -1,8 +1,18 @@
-import { useUsers } from '@/hooks/useUsers'
-import { Button, TextField, styled } from '@mui/material'
+import {
+  Alert,
+  AlertTitle,
+  Button,
+  Snackbar,
+  TextField,
+  styled,
+} from '@mui/material'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getRequest } from '../../service/userservice'
+import { Usuarios } from './Props/DefaultProps'
+import Notification from './components/Notification'
+import { useRouter } from 'next/router'
 
 const PadraoTextField = styled(TextField)`
   input {
@@ -26,19 +36,45 @@ const PadraoTextField = styled(TextField)`
 const Login = () => {
   const [usuario, setUsuario] = useState('')
   const [senha, setSenha] = useState('')
+  const [isValid, setIsValid] = useState<boolean>()
+  const [users, setUsers] = useState<Usuarios[]>([])
+  const [state, setState] = useState(false)
 
-  const { data } = useUsers()
+  const router = useRouter()
 
-  console.log(data)
+  useEffect(() => {
+    getAllUsers()
+  }, [])
+
+  async function getAllUsers() {
+    const data = await getRequest('/usuarios')
+    setUsers(data)
+  }
+
+  const validateLogin = () => {
+    const findUser = users.filter(
+      user => user.email === usuario && user.senha === senha
+    )
+
+    if (findUser.length) {
+      setIsValid(false)
+      setState(false)
+      router.push('/home')
+    } else {
+      setIsValid(true)
+      setState(true)
+    }
+  }
 
   return (
     <>
       <Head>
         <title>Unitelecuidado</title>
       </Head>
-      <div className='w-full h-96vh flex mx-40 items-center gap-24'>
-        <div className='w-1/2 flex justify-center'>
-          <div>
+
+      <div className='w-full h-96vh flex mx-40 items-center gap-24 flex-col md:flex-row'>
+        <div className='w-full md:w-1/2 flex justify-center'>
+          <div className='pt-10 md:pt-0'>
             <Image
               src='/logos/logoVertical.png'
               alt='Icone'
@@ -48,8 +84,16 @@ const Login = () => {
             />
           </div>
         </div>
+        {isValid ? (
+          <Notification
+            type='error'
+            message='mensagem de erro!!!'
+            isOpen={state}
+            setIsOpen={setState}
+          ></Notification>
+        ) : null}
 
-        <div className=' w-1/2 flex justify-center items-center'>
+        <div className=' w-full md:w-1/2 flex justify-center items-center'>
           <div className=' flex w-4/5 items-center bg-padrao-green rounded-2xl justify-center p-10'>
             <div className='flex flex-col gap-5 w-5/6'>
               <div className='bg-white rounded-md shadow-md'>
@@ -59,7 +103,7 @@ const Login = () => {
                     setUsuario(event.target.value)
                   }}
                   value={usuario}
-                  placeholder='Usuário'
+                  placeholder='Email'
                   sx={{
                     '.MuiFormLabel-root': {
                       alignItems: 'center',
@@ -97,7 +141,7 @@ const Login = () => {
                 <Button
                   variant='contained'
                   className={`bg-padrao-blue w-36`}
-                  //onClick={onClickButton}
+                  onClick={validateLogin}
                 >
                   Entrar
                 </Button>

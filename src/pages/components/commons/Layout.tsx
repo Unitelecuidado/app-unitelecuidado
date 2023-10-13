@@ -22,13 +22,14 @@ const Layout = ({ children }: LayoutProps) => {
   const router = useRouter()
   const [isLogin, setIsLogin] = useState(false)
 
-  useEffect(() => { // pra alterar as cores de acordo com a tela
+  useEffect(() => {
+    // pra alterar as cores de acordo com a tela
     const updateBodyClass = () => {
       if (router.pathname === '/') {
         document.body.className = 'bg-padrao-green-light'
-        setIsLogin(true)
       } else {
         document.body.className = 'bg-padrao-gray'
+        setIsLogin(true)
       }
     }
 
@@ -39,11 +40,11 @@ const Layout = ({ children }: LayoutProps) => {
     return () => {
       router.events.off('routeChangeComplete', updateBodyClass)
     }
-  }, [router.events, router.pathname])
+  }, [router.events, router.pathname, isLogin])
 
   return (
     <ThemeProvider theme={theme}>
-      {isLogin ? (
+      {!isLogin ? (
         <div className='font-gotham flex h-full m-4'>{children}</div>
       ) : (
         <div className='font-gotham flex h-full m-4'>
