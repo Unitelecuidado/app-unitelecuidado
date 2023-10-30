@@ -31,7 +31,7 @@ const config: Config = {
         'padrao-blue': '#184066',
         'padrao-green-light': '#DEE7CB',
         'padrao-green': '#ABBF8A',
-        'padrao-gray': '#EAEEF0',
+        'padrao-gray': '#f0f0f0',
       },
     },
   },
