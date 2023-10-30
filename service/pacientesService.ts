@@ -14,7 +14,7 @@ export async function getUser(URL: string) {
   }
 }
 
-export async function postRequest(URL: string, payload: any) {
+export async function cadastrarPaciente(URL: string, payload: any) {
   const response = await axiosClient
     .post(URL, payload)
     .then(response => response)
