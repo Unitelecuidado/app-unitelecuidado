@@ -25,7 +25,15 @@ const config: Config = {
       },
       height: {
         '94vh': '94vh',
-        '96vh': '96vh',
+        tela: '92.5vh',
+      },
+      margin: {
+        '1/2': '50%',
+        '1/4': '25%',
+      },
+      padding: {
+        '1/2': '50%',
+        '1/4': '25%',
       },
       colors: {
         'padrao-blue': '#184066',

@@ -33,7 +33,6 @@ const Notification = ({
         onClose={handleChange}
         severity={type}
         sx={{ width: '100%' }}
-        variant='filled'
       >
         {setAlertTitle()}
         {message}

@@ -1,5 +1,4 @@
 import {
-  HomeOutlined,
   ContactPhoneOutlined,
   PersonAddAlt1Outlined,
   LibraryAddCheckOutlined,
@@ -8,10 +7,18 @@ import {
 } from '@mui/icons-material'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const SideBar = () => {
+  const router = useRouter()
+
+  // Função para verificar se o usuário está na página de "pacientes"
+  const isOnPacientesPage = router.pathname === '/pacientes'
+
+  const isOnCadastroPage = router.pathname === '/cadastro_pacientes'
+
   return (
-    <div className='flex bg-white h-96vh w-1/4 md:w-1/6 shadow-md rounded-lg flex-col'>
+    <div className='flex bg-white h-tela w-1/4 md:w-1/6 shadow-md rounded-lg flex-col'>
       <div className='flex justify-center w-full my-7'>
         <div>
           <Image
@@ -25,19 +32,8 @@ const SideBar = () => {
       </div>
       <nav className='flex flex-col justify-between h-full'>
         <div>
-          <Link href={'/home'}>
-            <div className='hover:bg-padrao-green-light py-0.5 '>
-              <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
-                <span>
-                  <HomeOutlined />
-                </span>
-                <span className='font-normal'> Home </span>
-              </div>
-            </div>
-          </Link>
-
-          <Link href={'/pacientes'}>
-            <div className='hover:bg-padrao-green-light py-0.5 '>
+          {isOnPacientesPage ? (
+            <div className='bg-padrao-green-light py-0.5 '>
               <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
                 <span>
                   <ContactPhoneOutlined />
@@ -45,10 +41,21 @@ const SideBar = () => {
                 <span className='font-normal'> Pacientes </span>
               </div>
             </div>
-          </Link>
+          ) : (
+            <Link href={'/pacientes'}>
+              <div className='hover:bg-padrao-green-light py-0.5 '>
+                <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
+                  <span>
+                    <ContactPhoneOutlined />
+                  </span>
+                  <span className='font-normal'> Pacientes </span>
+                </div>
+              </div>
+            </Link>
+          )}
 
-          <Link href={'/cadastro_pacientes'}>
-            <div className='hover:bg-padrao-green-light py-0.5 '>
+          {isOnCadastroPage ? (
+            <div className='bg-padrao-green-light py-0.5 '>
               <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
                 <span>
                   <PersonAddAlt1Outlined />
@@ -56,7 +63,18 @@ const SideBar = () => {
                 <span className='font-normal'> Cadastro Pacientes </span>
               </div>
             </div>
-          </Link>
+          ) : (
+            <Link href={'/cadastro_pacientes'}>
+              <div className='hover:bg-padrao-green-light py-0.5 '>
+                <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
+                  <span>
+                    <PersonAddAlt1Outlined />
+                  </span>
+                  <span className='font-normal'> Cadastro Pacientes </span>
+                </div>
+              </div>
+            </Link>
+          )}
 
           <Link href={'/pendencias'}>
             <div className='hover:bg-padrao-green-light py-0.5 '>

@@ -1,18 +1,12 @@
-import {
-  Alert,
-  AlertTitle,
-  Button,
-  Snackbar,
-  TextField,
-  styled,
-} from '@mui/material'
+import { Button, TextField, styled } from '@mui/material'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import { getRequest } from '../../service/userservice'
+import { getUser } from '../../service/userservice'
 import { Usuarios } from './Props/DefaultProps'
 import Notification from './components/Notification'
 import { useRouter } from 'next/router'
+import cookies from 'js-cookie'
 
 const PadraoTextField = styled(TextField)`
   input {
@@ -47,7 +41,7 @@ const Login = () => {
   }, [])
 
   async function getAllUsers() {
-    const data = await getRequest('/usuarios')
+    const data = await getUser('/usuarios')
     setUsers(data)
   }
 
@@ -59,7 +53,8 @@ const Login = () => {
     if (findUser.length) {
       setIsValid(false)
       setState(false)
-      router.push('/home')
+      cookies.set('user', JSON.stringify(findUser))
+      router.push('/pacientes')
     } else {
       setIsValid(true)
       setState(true)
@@ -72,7 +67,7 @@ const Login = () => {
         <title>Unitelecuidado</title>
       </Head>
 
-      <div className='w-full h-96vh flex mx-40 items-center gap-24 flex-col md:flex-row'>
+      <div className='w-full h-tela flex mx-40 items-center gap-24 flex-col md:flex-row'>
         <div className='w-full md:w-1/2 flex justify-center'>
           <div className='pt-10 md:pt-0'>
             <Image
