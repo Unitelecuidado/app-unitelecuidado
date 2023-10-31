@@ -4,6 +4,8 @@ import { getPacientes } from '../../service/pacientesService'
 import { Pacientes } from './Props/DefaultProps'
 import { Delete, Edit } from '@mui/icons-material'
 
+import { format } from 'date-fns'
+
 const Pacientes = () => {
   const [pacientes, setPacientes] = useState<Pacientes[]>([])
   useEffect(() => {
@@ -49,7 +51,14 @@ const Pacientes = () => {
                       ? paciente.encaminhamento
                       : 'Não definido'}
                   </span>
-                  <span className='w-1/6'>{paciente.telefone}</span>
+                  <span className='w-1/6'>
+                    {paciente.ultima_alteracao
+                      ? format(
+                          new Date(paciente.ultima_alteracao),
+                          'dd/MM/yyyy'
+                        )
+                      : 'Não definido'}
+                  </span>
                   <span className='flex gap-3'>
                     <Edit />
                     <Delete />

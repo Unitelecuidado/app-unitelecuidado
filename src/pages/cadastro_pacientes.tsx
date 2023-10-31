@@ -1,6 +1,6 @@
 import { Button, TextField, styled } from '@mui/material'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { cadastrarPaciente } from '../../service/pacientesService'
 import Notification from './components/Notification'
 import InputMask from 'react-input-mask'
@@ -29,8 +29,19 @@ const CadastroPacientes = () => {
   const [telefone, setTelefone] = useState('')
   const [isValid, setIsValid] = useState<boolean>()
   const [state, setState] = useState(false)
+  const [dateTime, setDateTime] = useState('')
 
-  const payload = { nome: nome, telefone: telefone, ativo: true }
+  useEffect(() => {
+    const currentDateTime = new Date()
+    setDateTime(currentDateTime.toISOString())
+  }, [])
+
+  const payload = {
+    nome: nome,
+    telefone: telefone,
+    ativo: true,
+    ultima_alteracao: dateTime,
+  }
 
   const cadastrar = async () => {
     await cadastrarPaciente('/pacientes', payload)
