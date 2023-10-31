@@ -9,6 +9,19 @@ export interface Usuarios {
   ativo: boolean
 }
 
+export interface Pacientes {
+  id: number
+  nome: string
+  telefone: string
+  cpf?: string
+  desfecho?: string
+  encaminhamento?: string
+  nascimento?: string
+  observacoes?: string
+  sexo?: string
+  ativo: boolean
+}
+
 export interface NotificationProps {
   type: AlertColor
   message: string
