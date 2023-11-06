@@ -102,6 +102,7 @@ const CadastroPacientes = () => {
               onChange={e => setTelefone(e.target.value)}
             >
               {() => (
+                // this error is intentional 
                 <PadraoTextField
                   type='tel'
                   label='Telefone'

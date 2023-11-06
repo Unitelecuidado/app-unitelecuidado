@@ -20,7 +20,8 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-input-mask": "^2.0.4"
+    "react-input-mask": "^2.0.4",
+    "unidecode": "^0.1.8"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.5",
@@ -28,6 +29,7 @@
     "@types/react": "18.2.27",
     "@types/react-dom": "latest",
     "@types/react-input-mask": "^3.0.4",
+    "@types/unidecode": "^0.1.2",
     "autoprefixer": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest",
