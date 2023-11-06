@@ -78,7 +78,7 @@ const Layout = ({ children }: LayoutProps) => {
       ) : (
         <div className='font-gotham flex h-full m-8 gap-8'>
           <SideBar />
-          <div className='flex bg-white h-tela w-3/4 md:w-5/6 shadow-md rounded-lg flex-col'>
+          <div className='flex bg-white h-tela w-3/4 md:w-5/6 shadow-md rounded-lg flex-col overflow-y-auto'>
             <div className='flex justify-end '>
               <Avatar
                 sx={{

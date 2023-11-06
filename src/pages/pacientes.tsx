@@ -6,6 +6,7 @@ import { Delete, Edit } from '@mui/icons-material'
 
 import { format } from 'date-fns'
 import SearchBox from './components/SearchBox'
+import Link from 'next/link'
 
 const Pacientes = () => {
   const [pacientes, setPacientes] = useState<Pacientes[]>([])
@@ -51,7 +52,7 @@ const Pacientes = () => {
             <span className='w-1/6 hidden md:flex'>Última Alteração</span>
             <span>Opções</span>
           </div>
-          <div>
+          <div className=' flex flex-col overflow-y-auto'>
             {buscando === '' ? (
               pacientes.length ? (
                 pacientes.map(paciente => (
@@ -76,15 +77,26 @@ const Pacientes = () => {
                           : 'Não definido'}
                       </span>
                       <span className='flex gap-3'>
-                        <Edit />
-                        <Delete />
+                        <Link href={`/pacientes/editar/${paciente.id}`}>
+                          <Edit />
+                        </Link>
+                        <span>
+                          <Delete />
+                        </span>
                       </span>
                     </div>
                     <hr></hr>
                   </>
                 ))
               ) : (
-                <div>Sem pacientes cadastrados. </div>
+                <div className='flex justify-center p-20 gap-5 font-medium text-padrao-blue flex-col'>
+                  <span className='flex justify-center text-3xl'>
+                    Sem Pacientes Cadastrados.
+                  </span>
+                  <span className='flex justify-center text-lg '>
+                    Cadastre um novo na tela de Cadastro de Pacientes.
+                  </span>
+                </div>
               )
             ) : buscando && pacientesFiltrados.length ? (
               pacientesFiltrados.map(paciente => (

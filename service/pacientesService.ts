@@ -20,16 +20,16 @@ export async function cadastrarPaciente(URL: string, payload: any) {
     .then(response => response)
     .catch(error => console.log('2', error))
 
-  return response /* .data */
+  return response
 }
 
-export async function putRequest(URL: string, payload: any) {
+export async function editarPaciente(URL: string, payload: any) {
   const response = await axiosClient
     .put(URL, payload)
     .then(response => response)
     .catch(error => console.log('3', error))
 
-  return response /* .data */
+  return response
 }
 
 export async function deleteRequest(URL: string) {
