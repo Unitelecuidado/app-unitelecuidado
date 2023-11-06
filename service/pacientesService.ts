@@ -4,7 +4,7 @@ const axiosClient = axios.create()
 
 axiosClient.defaults.baseURL = 'http://localhost:8080'
 
-export async function getUser(URL: string) {
+export async function getPacientes(URL: string) {
   try {
     const response = await axiosClient.get(URL)
     return response.data
