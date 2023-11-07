@@ -79,7 +79,7 @@ const Layout = ({ children }: LayoutProps) => {
         <div className='font-gotham flex h-full m-8 gap-8'>
           <SideBar />
           <div className='flex bg-white h-tela w-3/4 md:w-5/6 shadow-md rounded-lg flex-col overflow-y-auto'>
-            <div className='flex justify-end '>
+            {/* <div className='flex justify-end '>
               <Avatar
                 sx={{
                   color: '0056A8',
@@ -90,12 +90,12 @@ const Layout = ({ children }: LayoutProps) => {
               >
                 {avatarName()}
               </Avatar>
-              {/* 
+              
               <div>
                 <span>{capitalizeName()}</span>
-              </div> */}
-            </div>
-            <div>{children}</div>
+              </div>
+            </div> */}
+            <div className='py-8'>{children}</div>
           </div>
         </div>
       )}

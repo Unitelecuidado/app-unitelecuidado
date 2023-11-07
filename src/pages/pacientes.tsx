@@ -1,6 +1,9 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
-import { getPacientes } from '../../service/pacientesService'
+import {
+  deletarPaciente,
+  getPacientes,
+} from '../../service/pacientesService'
 import { Pacientes } from './Props/DefaultProps'
 import { Delete, Edit } from '@mui/icons-material'
 
@@ -22,8 +25,12 @@ const Pacientes = () => {
   }, [])
 
   async function getAllPacientes() {
-    const data = await getPacientes('/pacientes')
+    const data = await getPacientes()
     setPacientes(data)
+  }
+
+  async function deletePacientes(id: number) {
+    await deletarPaciente(id)
   }
 
   return (
@@ -32,7 +39,7 @@ const Pacientes = () => {
         <title>Unitelecuidado</title>
       </Head>
       <div className='flex mx-16 py-16 flex-col gap-10'>
-        <span className='font-semibold text-4xl text-padrao-blue  top-20 absolute'>
+        <span className='font-semibold text-4xl text-padrao-blue  top-20 '>
           Lista de Pacientes
         </span>
         <div>
@@ -52,7 +59,7 @@ const Pacientes = () => {
             <span className='w-1/6 hidden md:flex'>Última Alteração</span>
             <span>Opções</span>
           </div>
-          <div className=' flex flex-col overflow-y-auto'>
+          <div className=' flex flex-col max-h-full overflow-y-auto'>
             {buscando === '' ? (
               pacientes.length ? (
                 pacientes.map(paciente => (
@@ -80,9 +87,12 @@ const Pacientes = () => {
                         <Link href={`/pacientes/editar/${paciente.id}`}>
                           <Edit />
                         </Link>
-                        <span>
+                        <div
+                          onClick={() => deletePacientes(paciente.id)}
+                          className='cursor-pointer'
+                        >
                           <Delete />
-                        </span>
+                        </div>
                       </span>
                     </div>
                     <hr></hr>
