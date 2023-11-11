@@ -1,6 +1,6 @@
-import { Button, TextField, styled } from '@mui/material'
+import { Autocomplete, Button, TextField, styled } from '@mui/material'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { cadastrarPaciente } from '../../service/pacientesService'
 import Notification from './components/Notification'
 import InputMask from 'react-input-mask'
@@ -27,18 +27,39 @@ const PadraoTextField = styled(TextField)`
 const CadastroPacientes = () => {
   const [nome, setNome] = useState('')
   const [telefone, setTelefone] = useState('')
+  const [origem, setOrigem] = useState<string | null>('')
   const [isValid, setIsValid] = useState<boolean>()
   const [state, setState] = useState(false)
+  const [dateTime, setDateTime] = useState('')
 
-  const payload = { nome: nome, telefone: telefone, ativo: true }
+  useEffect(() => {
+    const currentDateTime = new Date()
+    setDateTime(currentDateTime.toISOString())
+  }, [])
+
+  const payload = {
+    nome: nome,
+    telefone: telefone,
+    ativo: true,
+    ultima_alteracao: dateTime,
+    origem: origem,
+  }
+
+  const allOrigens = [
+    'Farmácia Municipal',
+    'Busca Espontânea',
+    'UBS',
+    'Outros',
+  ]
 
   const cadastrar = async () => {
-    await cadastrarPaciente('/pacientes', payload)
+    await cadastrarPaciente(payload)
       .then(() => {
         setIsValid(true)
         setState(true)
         setNome('')
         setTelefone('')
+        setOrigem('')
       })
       .catch(() => {
         setIsValid(false)
@@ -78,7 +99,7 @@ const CadastroPacientes = () => {
                   display: 'flex',
                   height: '25px',
                   color: '#184066',
-                  fontWeight: 500,
+                  fontWeight: 600,
                 },
                 width: '100%',
               }}
@@ -91,6 +112,7 @@ const CadastroPacientes = () => {
               onChange={e => setTelefone(e.target.value)}
             >
               {() => (
+                // this error is intentional
                 <PadraoTextField
                   type='tel'
                   label='Telefone'
@@ -101,7 +123,7 @@ const CadastroPacientes = () => {
                       display: 'flex',
                       height: '25px',
                       color: '#184066',
-                      fontWeight: 500,
+                      fontWeight: 600,
                     },
                     width: '100%',
                   }}
@@ -109,7 +131,36 @@ const CadastroPacientes = () => {
               )}
             </InputMask>
           </div>
+          <div className='bg-padrao-gray rounded-md'>
+            <Autocomplete
+              options={allOrigens}
+              getOptionLabel={option => option}
+              size='medium'
+              onChange={(event, newValue) => {
+                setOrigem(newValue)
+              }}
+              value={origem}
+              renderInput={params => (
+                <PadraoTextField
+                  {...params}
+                  label='Origem'
+                  variant='outlined'
+                  sx={{
+                    '.MuiFormLabel-root': {
+                      alignItems: 'center',
+                      display: 'flex',
+                      height: '25px',
+                      color: '#184066',
+                      fontWeight: 600,
+                    },
+                    width: '100%',
+                  }}
+                />
+              )}
+            />
+          </div>
         </div>
+
         <div className='rounded-md flex justify-end'>
           <Button
             variant='contained'

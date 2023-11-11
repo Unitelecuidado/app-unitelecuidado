@@ -40,6 +40,7 @@ const config: Config = {
         'padrao-green-light': '#DEE7CB',
         'padrao-green': '#ABBF8A',
         'padrao-gray': '#f0f0f0',
+        'padrao-gray-dark': '#78909C'
       },
     },
   },
