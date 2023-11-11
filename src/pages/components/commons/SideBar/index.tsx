@@ -17,7 +17,8 @@ const SideBar = () => {
 
   const isOnCadastroPage = router.pathname === '/cadastro_pacientes'
 
-  const isOnCadastroMonitoresPage = router.pathname === '/cadastro_monitores'
+  const isOnCadastroUsuariosPage =
+    router.pathname === '/cadastro_usuarios'
 
   return (
     <div className='flex bg-white h-tela w-1/4 md:w-1/6 shadow-md rounded-lg flex-col'>
@@ -78,28 +79,6 @@ const SideBar = () => {
             </Link>
           )}
 
-          {isOnCadastroMonitoresPage ? (
-            <div className='bg-padrao-green-light py-0.5 '>
-              <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
-                <span>
-                  <PersonAddAlt1Outlined />
-                </span>
-                <span className='font-normal'> Cadastro Monitores </span>
-              </div>
-            </div>
-          ) : (
-            <Link href={'/cadastro_monitores'}>
-              <div className='hover:bg-padrao-green-light py-0.5 '>
-                <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
-                  <span>
-                    <PersonAddAlt1Outlined />
-                  </span>
-                  <span className='font-normal'> Cadastro Monitores </span>
-                </div>
-              </div>
-            </Link>
-          )}
-
           <Link href={'/pendencias'}>
             <div className='hover:bg-padrao-green-light py-0.5 '>
               <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
@@ -113,6 +92,28 @@ const SideBar = () => {
         </div>
         <div className='md:pb-3 pb-1'>
           <hr />
+          {isOnCadastroUsuariosPage ? (
+            <div className='bg-padrao-green-light py-0.5 '>
+              <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
+                <span>
+                  <PersonAddAlt1Outlined />
+                </span>
+                <span className='font-normal'> Cadastro Usuários </span>
+              </div>
+            </div>
+          ) : (
+            <Link href={'/cadastro_usuarios'}>
+              <div className='hover:bg-padrao-green-light py-0.5 '>
+                <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
+                  <span>
+                    <PersonAddAlt1Outlined />
+                  </span>
+                  <span className='font-normal'> Cadastro Usuários </span>
+                </div>
+              </div>
+            </Link>
+          )}
+
           <Link href={'/perfil'}>
             <div className='hover:bg-padrao-green-light py-0.5 '>
               <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>

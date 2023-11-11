@@ -2,11 +2,11 @@ import { Button, TextField, styled } from '@mui/material'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import { getUser } from '../../service/userservice'
 import { Usuarios } from './Props/DefaultProps'
 import Notification from './components/Notification'
 import { useRouter } from 'next/router'
 import cookies from 'js-cookie'
+import { getUser } from '../../service/userService'
 
 const PadraoTextField = styled(TextField)`
   input {
@@ -41,7 +41,7 @@ const Login = () => {
   }, [])
 
   async function getAllUsers() {
-    const data = await getUser('/usuarios')
+    const data = await getUser()
     setUsers(data)
   }
 
