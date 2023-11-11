@@ -30,3 +30,8 @@ export interface NotificationProps {
   isOpen: boolean
   setIsOpen: (value: boolean) => void
 }
+
+export interface allThing {
+  name: string
+  value: string
+}

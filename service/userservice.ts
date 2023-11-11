@@ -4,9 +4,9 @@ const axiosClient = axios.create()
 
 axiosClient.defaults.baseURL = 'http://localhost:8080'
 
-export async function getUser(URL: string) {
+export async function getUser() {
   try {
-    const response = await axiosClient.get(URL)
+    const response = await axiosClient.get('/usuarios')
     return response.data
   } catch (error) {
     console.log('Erro na requisição:', error)
@@ -14,29 +14,29 @@ export async function getUser(URL: string) {
   }
 }
 
-export async function postRequest(URL: string, payload: any) {
+export async function createUser(payload: any) {
   const response = await axiosClient
-    .post(URL, payload)
+    .post('/usuarios', payload)
     .then(response => response)
     .catch(error => console.log('2', error))
 
-  return response /* .data */
+  return response
 }
 
-export async function putRequest(URL: string, payload: any) {
+export async function updateUser(payload: any) {
   const response = await axiosClient
-    .put(URL, payload)
+    .put('/usuarios', payload)
     .then(response => response)
     .catch(error => console.log('3', error))
 
-  return response /* .data */
+  return response
 }
 
-export async function deleteRequest(URL: string) {
+export async function deleteUser(id: number) {
   const response = await axiosClient
-    .delete(URL)
+    .delete('/usuarios')
     .then(response => response)
     .catch(error => console.log('4', error))
 
-  return response /* .data */
+  return response
 }
