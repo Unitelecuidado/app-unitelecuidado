@@ -1,11 +1,15 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
-import { getPacientes } from '../../service/pacientesService'
+import {
+  deletarPaciente,
+  getPacientes,
+} from '../../service/pacientesService'
 import { Pacientes } from './Props/DefaultProps'
 import { Delete, Edit } from '@mui/icons-material'
 
 import { format } from 'date-fns'
 import SearchBox from './components/SearchBox'
+import Link from 'next/link'
 
 const Pacientes = () => {
   const [pacientes, setPacientes] = useState<Pacientes[]>([])
@@ -21,8 +25,12 @@ const Pacientes = () => {
   }, [])
 
   async function getAllPacientes() {
-    const data = await getPacientes('/pacientes')
+    const data = await getPacientes()
     setPacientes(data)
+  }
+
+  async function deletePacientes(id: number) {
+    await deletarPaciente(id)
   }
 
   return (
@@ -31,7 +39,7 @@ const Pacientes = () => {
         <title>Unitelecuidado</title>
       </Head>
       <div className='flex mx-16 py-16 flex-col gap-10'>
-        <span className='font-semibold text-4xl text-padrao-blue  top-20 absolute'>
+        <span className='font-semibold text-4xl text-padrao-blue  top-20 '>
           Lista de Pacientes
         </span>
         <div>
@@ -51,7 +59,7 @@ const Pacientes = () => {
             <span className='w-1/6 hidden md:flex'>Última Alteração</span>
             <span>Opções</span>
           </div>
-          <div>
+          <div className=' flex flex-col max-h-full overflow-y-auto'>
             {buscando === '' ? (
               pacientes.length ? (
                 pacientes.map(paciente => (
@@ -76,15 +84,29 @@ const Pacientes = () => {
                           : 'Não definido'}
                       </span>
                       <span className='flex gap-3'>
-                        <Edit />
-                        <Delete />
+                        <Link href={`/pacientes/editar/${paciente.id}`}>
+                          <Edit />
+                        </Link>
+                        <div
+                          onClick={() => deletePacientes(paciente.id)}
+                          className='cursor-pointer'
+                        >
+                          <Delete />
+                        </div>
                       </span>
                     </div>
                     <hr></hr>
                   </>
                 ))
               ) : (
-                <div>Sem pacientes cadastrados. </div>
+                <div className='flex justify-center p-20 gap-5 font-medium text-padrao-blue flex-col'>
+                  <span className='flex justify-center text-3xl'>
+                    Sem Pacientes Cadastrados.
+                  </span>
+                  <span className='flex justify-center text-lg '>
+                    Cadastre um novo na tela de Cadastro de Pacientes.
+                  </span>
+                </div>
               )
             ) : buscando && pacientesFiltrados.length ? (
               pacientesFiltrados.map(paciente => (

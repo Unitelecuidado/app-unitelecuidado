@@ -79,7 +79,7 @@ SearchBoxProps) => {
       <div className='w-full flex items-center gap-1 bg-padrao-gray rounded-md'>
         <PadraoTextField
           required
-          type='String'
+          type='search'
           onChange={event => {
             handleSearch(event.target.value)
           }}
@@ -91,7 +91,7 @@ SearchBoxProps) => {
               height: '25px',
               fontWeight: 600,
             },
-            width: '80%',
+            width: '100%',
           }}
           placeholder={'Buscar paciente por nome'}
           InputProps={{
@@ -102,44 +102,6 @@ SearchBoxProps) => {
             ),
           }}
         />
-        <Divider />
-        {/*  <Autocomplete
-            options={allSetores}
-            getOptionLabel={option => option.setor}
-            ListboxProps={{
-              style: { maxHeight: 190, fontFamily: 'Montserrat' },
-            }}
-            size='medium'
-            onChange={(event, newValue) => {
-              handleSearchSetor(newValue)
-            }}
-            sx={{
-              '.MuiFormLabel-root': {
-                alignItems: 'center',
-                display: 'flex',
-                height: '25px',
-                color: 'black',
-                fontWeight: 600,
-              },
-            }}
-            renderInput={params => (
-              <PadraoTextField
-                {...params}
-                placeholder='Setor'
-                variant='outlined'
-                sx={{
-                  '.MuiFormLabel-root': {
-                    alignItems: 'center',
-                    display: 'flex',
-                    height: '25px',
-                    color: 'black',
-                    fontWeight: 600,
-                  },
-                  width: '200px',
-                }}
-              />
-            )}
-          /> */}
         <Divider />
         {/* <Autocomplete
             options={lotes}

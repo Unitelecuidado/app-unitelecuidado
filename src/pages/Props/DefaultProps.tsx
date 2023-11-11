@@ -20,6 +20,7 @@ export interface Pacientes {
   observacoes?: string
   sexo?: string
   ultima_alteracao?: string
+  origem?: string
   ativo: boolean
 }
 
