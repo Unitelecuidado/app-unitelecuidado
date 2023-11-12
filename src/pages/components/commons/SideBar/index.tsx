@@ -8,17 +8,25 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+
+import cookies from 'js-cookie'
 
 const SideBar = () => {
   const router = useRouter()
+  const [cargo, setCargo] = useState('')
+
+  useEffect(() => {
+    const userCookie = cookies.get('user')
+    setCargo(userCookie?.length && JSON.parse(userCookie)[0].cargo)
+  }, [])
 
   // Função para verificar se o usuário está na página de "pacientes"
   const isOnPacientesPage = router.pathname === '/pacientes'
 
   const isOnCadastroPage = router.pathname === '/cadastro_pacientes'
 
-  const isOnCadastroUsuariosPage =
-    router.pathname === '/cadastro_usuarios'
+  const isOnCadastroUsuariosPage = router.pathname === '/cadastro_usuarios'
 
   return (
     <div className='flex bg-white h-tela w-1/4 md:w-1/6 shadow-md rounded-lg flex-col'>
@@ -92,18 +100,9 @@ const SideBar = () => {
         </div>
         <div className='md:pb-3 pb-1'>
           <hr />
-          {isOnCadastroUsuariosPage ? (
-            <div className='bg-padrao-green-light py-0.5 '>
-              <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
-                <span>
-                  <PersonAddAlt1Outlined />
-                </span>
-                <span className='font-normal'> Cadastro Usuários </span>
-              </div>
-            </div>
-          ) : (
-            <Link href={'/cadastro_usuarios'}>
-              <div className='hover:bg-padrao-green-light py-0.5 '>
+          {cargo === 'ADMIN' || 'PROFESSOR' ? (
+            isOnCadastroUsuariosPage ? (
+              <div className='bg-padrao-green-light py-0.5 '>
                 <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
                   <span>
                     <PersonAddAlt1Outlined />
@@ -111,8 +110,22 @@ const SideBar = () => {
                   <span className='font-normal'> Cadastro Usuários </span>
                 </div>
               </div>
-            </Link>
-          )}
+            ) : (
+              <Link href={'/cadastro_usuarios'}>
+                <div className='hover:bg-padrao-green-light py-0.5 '>
+                  <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
+                    <span>
+                      <PersonAddAlt1Outlined />
+                    </span>
+                    <span className='font-normal'>
+                      {' '}
+                      Cadastro Usuários{' '}
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            )
+          ) : null}
 
           <Link href={'/perfil'}>
             <div className='hover:bg-padrao-green-light py-0.5 '>
