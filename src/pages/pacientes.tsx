@@ -33,6 +33,33 @@ const Pacientes = () => {
     await deletarPaciente(id)
   }
 
+  const allEncaminhamentos = [
+    {
+      nome: 'Não Encaminhado ',
+      value: 'NAO_ENCAMINHADO',
+    },
+    { nome: 'Medicina', value: 'MEDICINA' },
+    { nome: 'Fisioterapia', value: 'FISIOTERAPIA' },
+    { nome: 'Enfermagem', value: 'ENFERMAGEM' },
+    { nome: 'Nutrição', value: 'NUTRICAO' },
+    { nome: 'Farmácia', value: 'FARMARCIA' },
+    {
+      nome: 'Clínica Escola de Fisioterapia ',
+      value: 'CLINICA_ESCOLA_FISIOTERAPIA',
+    },
+    {
+      nome: 'Programa de Atenção Ampliada à Saúde (PAAS) ',
+      value: 'PAAS',
+    },
+  ]
+
+  const valorEncaminhamento = (value: string) => {
+    const nomeCorreto = allEncaminhamentos?.filter(encamin =>
+      encamin.value.includes(value)
+    )
+    return nomeCorreto[0].nome
+  }
+
   return (
     <>
       <Head>
@@ -72,7 +99,7 @@ const Pacientes = () => {
                       <span className='w-1/6'>{paciente.telefone}</span>
                       <span className='w-1/6'>
                         {paciente.encaminhamento
-                          ? paciente.encaminhamento
+                          ? valorEncaminhamento(paciente.encaminhamento)
                           : 'Não definido'}
                       </span>
                       <span className='w-1/6  hidden md:flex'>
@@ -119,7 +146,7 @@ const Pacientes = () => {
                     <span className='w-1/6'>{paciente.telefone}</span>
                     <span className='w-1/6'>
                       {paciente.encaminhamento
-                        ? paciente.encaminhamento
+                        ? valorEncaminhamento(paciente.encaminhamento)
                         : 'Não definido'}
                     </span>
                     <span className='w-1/6  hidden md:flex'>
