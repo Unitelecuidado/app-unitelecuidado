@@ -6,7 +6,7 @@ import { Usuarios } from './Props/DefaultProps'
 import Notification from './components/Notification'
 import { useRouter } from 'next/router'
 import cookies from 'js-cookie'
-import { getUser } from '../../service/userService'
+import { getUser } from '../../service/userservice'
 
 const PadraoTextField = styled(TextField)`
   input {
