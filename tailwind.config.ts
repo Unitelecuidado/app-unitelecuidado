@@ -40,7 +40,17 @@ const config: Config = {
         'padrao-green-light': '#DEE7CB',
         'padrao-green': '#ABBF8A',
         'padrao-gray': '#f0f0f0',
-        'padrao-gray-dark': '#78909C'
+        'padrao-gray-dark': '#78909C',
+        'black-shadow': 'rgba(0, 0, 0, 0.5)',
+      },
+      maxHeight: {
+        '50': '50px',
+        '170': '170px',
+        '450': '450px',
+        '500': '500px',
+        '800': '800px',
+        '1000': '1000px',
+        '80%': '80%',
       },
     },
   },
