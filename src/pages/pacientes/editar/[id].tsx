@@ -66,6 +66,7 @@ const EditarPaciente = () => {
 
   useEffect(() => {
     getPacientePorId()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   async function getPacientePorId() {
@@ -89,6 +90,8 @@ const EditarPaciente = () => {
     setDataNasci(data.nascimento)
     setOrigem(data.origem)
     setDetalhamento(data.detalhes)
+    setEndereco(data.endereco)
+    setCns(data.cns)
   }
 
   const payload = {
@@ -104,6 +107,8 @@ const EditarPaciente = () => {
     sexo: sexo,
     nascimento: dataNasci,
     origem: origem,
+    endereco: endereco,
+    cns: cns,
   }
 
   const allDesfechos = [

@@ -22,6 +22,9 @@ export interface Pacientes {
   ultima_alteracao?: string
   origem?: string
   ativo: boolean
+  cns?: string
+  endereco?: string
+  detalhes?: string
 }
 
 export interface NotificationProps {
@@ -34,4 +37,8 @@ export interface NotificationProps {
 export interface allThing {
   name: string
   value: string
+}
+
+export interface ModalComponents {
+  [key: string]: JSX.Element
 }
