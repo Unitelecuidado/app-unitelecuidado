@@ -28,6 +28,8 @@ const SideBar = () => {
 
   const isOnCadastroUsuariosPage = router.pathname === '/cadastro_usuarios'
 
+  const isOnPendenciasPage = router.pathname === '/pendencias'
+
   return (
     <div className='flex bg-white h-tela w-1/4 md:w-1/6 shadow-md rounded-lg flex-col'>
       <div className='flex justify-center w-full my-7'>
@@ -87,8 +89,8 @@ const SideBar = () => {
             </Link>
           )}
 
-          <Link href={'/pendencias'}>
-            <div className='hover:bg-padrao-green-light py-0.5 '>
+          {isOnPendenciasPage ? (
+            <div className='bg-padrao-green-light py-0.5 '>
               <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
                 <span>
                   <LibraryAddCheckOutlined />
@@ -96,11 +98,22 @@ const SideBar = () => {
                 <span className='font-normal'> Pendências </span>
               </div>
             </div>
-          </Link>
+          ) : (
+            <Link href={'/pendencias'}>
+              <div className='hover:bg-padrao-green-light py-0.5 '>
+                <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
+                  <span>
+                    <LibraryAddCheckOutlined />
+                  </span>
+                  <span className='font-normal'> Pendências </span>
+                </div>
+              </div>
+            </Link>
+          )}
         </div>
         <div className='md:pb-3 pb-1'>
           <hr />
-          {cargo === 'ADMIN' || 'PROFESSOR' ? (
+          {cargo != 'MONITOR' ? (
             isOnCadastroUsuariosPage ? (
               <div className='bg-padrao-green-light py-0.5 '>
                 <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
@@ -117,10 +130,7 @@ const SideBar = () => {
                     <span>
                       <PersonAddAlt1Outlined />
                     </span>
-                    <span className='font-normal'>
-                      {' '}
-                      Cadastro Usuários{' '}
-                    </span>
+                    <span className='font-normal'>Cadastro Usuários</span>
                   </div>
                 </div>
               </Link>

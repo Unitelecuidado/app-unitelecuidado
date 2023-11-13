@@ -1,14 +1,12 @@
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
-import { getPacientes } from '../../service/pacientesService'
-import { Pacientes } from './Props/DefaultProps'
-
 import SearchBox from './components/SearchBox'
-import PacientesList from './components/PacientesList'
+import { Pacientes } from './Props/DefaultProps'
+import { useState, useEffect } from 'react'
+import { getPacientes } from '../../service/pacientesService'
+import PendenciasCard from './components/PendenciasCard'
 
-const Pacientes = () => {
+const Pendencias = () => {
   const [pacientes, setPacientes] = useState<Pacientes[]>([])
-  const [loading, setLoading] = useState<boolean>(false)
 
   const [pacientesFiltrados, setPacientesFiltrados] = useState<
     Pacientes[]
@@ -18,14 +16,14 @@ const Pacientes = () => {
 
   useEffect(() => {
     getAllPacientes()
-  }, [loading])
+  }, [])
 
   async function getAllPacientes() {
     const data = await getPacientes()
 
     setPacientes(
-      data?.filter(
-        (paciente: Pacientes) => paciente.status !== 'EM_ANDAMENTO'
+      data?.filter((paciente: Pacientes) =>
+        paciente.status?.includes('EM_ANDAMENTO')
       )
     )
   }
@@ -37,7 +35,7 @@ const Pacientes = () => {
       </Head>
       <div className='flex mx-16 py-16 flex-col gap-10'>
         <span className='font-semibold text-4xl text-padrao-blue  top-20 '>
-          Lista de Pacientes
+          Pendências
         </span>
         <div>
           <SearchBox
@@ -49,46 +47,33 @@ const Pacientes = () => {
           />
         </div>
         <div className='flex flex-col'>
-          <div className='flex w-full justify-between items-center px-5 py-2 rounded-md font-medium uppercase text-md bg-padrao-gray text-padrao-gray-dark'>
-            <div className='flex w-full gap-5'>
-              <span className='w-2/5'>Nome</span>
-              <span className='w-1/5'>Telefone</span>
-              <span className='w-1/5 overflow-auto'>Desfecho</span>
-              <span className='w-1/5 overflow-auto'>Última Alteração</span>
-              <span className='w-1/5'>Status</span>
-            </div>
-            <span>Opções</span>
-          </div>
           <div className=' flex flex-col max-h-full overflow-y-auto'>
             {buscando === '' ? (
               pacientes.length ? (
-                pacientes.map(paciente => (
-                  <PacientesList
-                    key={paciente.id}
-                    paciente={paciente}
-                    setLoading={setLoading}
-                    loading={loading}
-                  />
-                ))
+                <div className='grid grid-cols-3 gap-12 '>
+                  {pacientes.map(paciente => (
+                    <PendenciasCard
+                      key={paciente.id}
+                      paciente={paciente}
+                    />
+                  ))}
+                </div>
               ) : (
                 <div className='flex justify-center p-20 gap-5 font-medium text-padrao-blue flex-col'>
                   <span className='flex justify-center text-3xl'>
-                    Sem Pacientes Cadastrados
+                    Sem Pacientes Pendentes
                   </span>
                   <span className='flex justify-center text-lg '>
-                    Cadastre um novo em Cadastro de Pacientes.
+                    Verifique a lista de pacientes.
                   </span>
                 </div>
               )
             ) : buscando && pacientesFiltrados.length ? (
-              pacientesFiltrados.map(paciente => (
-                <PacientesList
-                  key={paciente.id}
-                  paciente={paciente}
-                  setLoading={setLoading}
-                  loading={loading}
-                />
-              ))
+              <div className='grid grid-cols-3 gap-12 '>
+                {pacientesFiltrados.map(paciente => (
+                  <PendenciasCard key={paciente.id} paciente={paciente} />
+                ))}
+              </div>
             ) : (
               <div className='flex justify-center p-20 gap-5 font-medium text-padrao-blue flex-col'>
                 <span className='flex justify-center text-3xl'>
@@ -106,4 +91,4 @@ const Pacientes = () => {
   )
 }
 
-export default Pacientes
+export default Pendencias

@@ -1,5 +1,11 @@
 import Notification from '@/pages/components/Notification'
-import { Autocomplete, Button, TextField, styled } from '@mui/material'
+import {
+  Autocomplete,
+  Button,
+  Switch,
+  TextField,
+  styled,
+} from '@mui/material'
 import { useRouter } from 'next/router'
 import InputMask from 'react-input-mask'
 
@@ -45,6 +51,7 @@ const EditarPaciente = () => {
   const [detalhamento, setDetalhamento] = useState('')
   const [observacoes, setObservacoes] = useState('')
   const [origem, setOrigem] = useState<string | null>('')
+  const [concluido, setConcluido] = useState<boolean>(false)
 
   const [desfecho, setDesfecho] = useState<{
     nome: string
@@ -92,6 +99,7 @@ const EditarPaciente = () => {
     setDetalhamento(data.detalhes)
     setEndereco(data.endereco)
     setCns(data.cns)
+    setConcluido(data.status === 'CONCLUIDO' && true)
   }
 
   const payload = {
@@ -109,6 +117,12 @@ const EditarPaciente = () => {
     origem: origem,
     endereco: endereco,
     cns: cns,
+    status:
+      desfecho?.value === 'ATENDIDO' && !concluido
+        ? 'EM_ANDAMENTO'
+        : concluido
+        ? 'CONCLUIDO'
+        : 'NAO_INICIADO',
   }
 
   const allDesfechos = [
@@ -150,8 +164,8 @@ const EditarPaciente = () => {
         setIsValid(true)
         setState(true)
         setTimeout(() => {
-          router.push('/pacientes')
-        }, 2000)
+          router.back()
+        }, 1000)
       })
       .catch(() => {
         setIsValid(false)
@@ -494,13 +508,26 @@ const EditarPaciente = () => {
             </div>
           </div>
         </>
+        <div className='flex items-center justify-between'>
+          <span className='font-semibold text-4xl text-padrao-blue'>
+            Concluir Atendimento
+          </span>
+          <Switch
+            checked={concluido}
+            onChange={event => {
+              setConcluido(event.target.checked)
+            }}
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
+        </div>
+
         <div className='rounded-md flex justify-end gap-10 items-center'>
-          <Link
-            href={'/pacientes'}
+          <span
             className={`text-padrao-blue hover:underline`}
+            onClick={() => router.back()}
           >
             Voltar
-          </Link>
+          </span>
           <Button
             variant='contained'
             className={`bg-padrao-blue w-36 capitalize`}

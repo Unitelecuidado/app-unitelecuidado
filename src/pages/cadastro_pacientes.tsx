@@ -42,6 +42,7 @@ const CadastroPacientes = () => {
     telefone: telefone,
     ativo: true,
     ultima_alteracao: dateTime,
+    status: 'NAO_INICIADO',
     origem: origem,
   }
 
