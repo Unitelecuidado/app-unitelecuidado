@@ -25,6 +25,7 @@ export interface Pacientes {
   cns?: string
   endereco?: string
   detalhes?: string
+  status?: string
 }
 
 export interface NotificationProps {
