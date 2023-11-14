@@ -137,26 +137,23 @@ const SideBar = () => {
             )
           ) : null}
 
-          <Link href={'/perfil'}>
-            <div className='hover:bg-padrao-green-light py-0.5 '>
-              <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
-                <span>
-                  <AccountCircleOutlined />
-                </span>
-                <span className='font-normal'> Perfil </span>
-              </div>
+          <div className='hover:bg-padrao-green-light py-0.5 hover:cursor-not-allowed '>
+            <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
+              <span>
+                <AccountCircleOutlined />
+              </span>
+              <span className='font-normal'> Perfil </span>
             </div>
-          </Link>
-          <Link href={'/configuracoes'}>
-            <div className='hover:bg-padrao-green-light py-0.5 '>
-              <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
-                <span>
-                  <SettingsOutlined />
-                </span>
-                <span className='font-normal'> Configurações </span>
-              </div>
+          </div>
+
+          <div className='hover:bg-padrao-green-light py-0.5 hover:cursor-not-allowed '>
+            <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
+              <span>
+                <SettingsOutlined />
+              </span>
+              <span className='font-normal'> Configurações </span>
             </div>
-          </Link>
+          </div>
         </div>
       </nav>
     </div>

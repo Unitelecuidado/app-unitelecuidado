@@ -91,7 +91,7 @@ const PacientesList = ({
         className='flex w-full justify-between items-center cursor-pointer px-5 py-4 rounded-md font-medium uppercase text-md text-padrao-blue'
       >
         <div
-          className='flex w-full items-center gap-5'
+          className='flex w-full items-center gap-5 pr-5'
           onClick={() => openModal('PacienteModal')}
         >
           <span className='w-2/5'>{paciente.nome}</span>
