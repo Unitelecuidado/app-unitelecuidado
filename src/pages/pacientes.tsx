@@ -50,7 +50,7 @@ const Pacientes = () => {
         </div>
         <div className='flex flex-col'>
           <div className='flex w-full justify-between items-center px-5 py-2 rounded-md font-medium uppercase text-md bg-padrao-gray text-padrao-gray-dark'>
-            <div className='flex w-full gap-5'>
+            <div className='flex w-full gap-5 items-center pr-5'>
               <span className='w-2/5'>Nome</span>
               <span className='w-1/5'>Telefone</span>
               <span className='w-1/5 overflow-auto'>Desfecho</span>
