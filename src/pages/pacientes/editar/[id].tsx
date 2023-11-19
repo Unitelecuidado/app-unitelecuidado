@@ -374,6 +374,9 @@ const EditarPaciente = () => {
                 value={desfecho}
                 onChange={(event, newValue) => {
                   setDesfecho(newValue)
+                  if (newValue?.value !== 'ATENDIDO') {
+                    setEncaminhamento(null)
+                  }
                 }}
                 renderInput={params => (
                   <PadraoTextField

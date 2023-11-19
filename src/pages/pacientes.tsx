@@ -5,6 +5,10 @@ import { Pacientes } from './Props/DefaultProps'
 
 import SearchBox from './components/SearchBox'
 import PacientesList from './components/PacientesList'
+import {
+  ArrowDownwardOutlined,
+  ArrowUpwardOutlined,
+} from '@mui/icons-material'
 
 const Pacientes = () => {
   const [pacientes, setPacientes] = useState<Pacientes[]>([])
@@ -14,7 +18,9 @@ const Pacientes = () => {
     Pacientes[]
   >([])
   const [buscando, setBuscando] = useState('')
-  const [encaminhamento, setEncaminhamento] = useState([])
+
+  const [selected, setSelected] = useState('')
+  const [orderSorting, setOrderSorting] = useState(false)
 
   useEffect(() => {
     getAllPacientes()
@@ -23,11 +29,88 @@ const Pacientes = () => {
   async function getAllPacientes() {
     const data = await getPacientes()
 
-    setPacientes(
-      data?.filter(
-        (paciente: Pacientes) => paciente.status !== 'EM_ANDAMENTO'
+    const pacientesOrdenados = data
+      ?.filter((paciente: Pacientes) => paciente.status !== 'EM_ANDAMENTO')
+      .sort((a: Pacientes, b: Pacientes) => {
+        if (a.status === 'NAO_INICIADO' && b.status !== 'NAO_INICIADO') {
+          return -1
+        } else if (
+          a.status !== 'NAO_INICIADO' &&
+          b.status === 'NAO_INICIADO'
+        ) {
+          return 1
+        } else {
+          return a.nome.localeCompare(b.nome)
+        }
+      })
+
+    setPacientes(pacientesOrdenados)
+  }
+
+  const getArrow = (label: string) => {
+    if (!orderSorting && label === selected) {
+      return (
+        <ArrowUpwardOutlined
+          sx={{
+            width: '20px',
+            paddingLeft: '5px',
+          }}
+        />
       )
-    )
+    } else if (orderSorting && label === selected) {
+      return (
+        <ArrowDownwardOutlined
+          sx={{
+            width: '20px',
+            paddingLeft: '5px',
+          }}
+        />
+      )
+    } else {
+      return (
+        <span className='hidden'>
+          <ArrowUpwardOutlined
+            sx={{
+              width: '20px',
+              paddingLeft: '5px',
+              color: '#184066',
+            }}
+          />
+        </span>
+      )
+    }
+  }
+
+  const sorting = (option: string) => {
+    let sorted: Pacientes[] = []
+
+    if (pacientes) {
+      if (orderSorting) {
+        sorted = pacientes?.sort((a, b) =>
+          (a[option as keyof Pacientes] as string).localeCompare(
+            b[option as keyof Pacientes] as string
+          )
+        )
+      }
+      if (!orderSorting) {
+        sorted = pacientes?.sort((a, b) =>
+          (b[option as keyof Pacientes] as string).localeCompare(
+            a[option as keyof Pacientes] as string
+          )
+        )
+      }
+      setOrderSorting(!orderSorting)
+      setPacientes(sorted)
+    }
+  }
+
+  const changeArrow = (label: string) => {
+    setSelected(label)
+  }
+
+  const handleClick = (label: string) => {
+    changeArrow(label)
+    sorting(label)
   }
 
   return (
@@ -45,17 +128,46 @@ const Pacientes = () => {
             setBuscando={setBuscando}
             allPacientes={pacientes}
             setPacientesFiltrados={setPacientesFiltrados}
-            // setEncaminhamento={setEncaminhamento}
           />
         </div>
         <div className='flex flex-col'>
-          <div className='flex w-full justify-between items-center px-5 py-2 rounded-md font-medium uppercase text-md bg-padrao-gray text-padrao-gray-dark'>
+          <div className='flex w-full justify-between items-center h-10 px-5 py-2 rounded-md font-medium uppercase text-md bg-padrao-gray text-padrao-gray-dark'>
             <div className='flex w-full gap-5 items-center pr-5'>
-              <span className='w-2/5'>Nome</span>
-              <span className='w-1/5'>Telefone</span>
-              <span className='w-1/5 overflow-auto'>Desfecho</span>
-              <span className='w-1/5 overflow-auto'>Última Alteração</span>
-              <span className='w-1/5'>Status</span>
+              <div
+                className='flex w-2/5 items-center cursor-pointer'
+                onClick={() => handleClick('nome')}
+              >
+                <span>Nome</span>
+                <span>{getArrow('nome')}</span>
+              </div>
+              <div
+                className='flex w-1/5 overflow-auto items-center cursor-pointer'
+                onClick={() => handleClick('telefone')}
+              >
+                <span>Telefone</span>
+                <span>{getArrow('telefone')}</span>
+              </div>
+              <div
+                className='flex w-1/5 overflow-auto items-center cursor-pointer'
+                onClick={() => handleClick('desfecho')}
+              >
+                <span>Desfecho</span>
+                <span>{getArrow('desfecho')}</span>
+              </div>
+              <div
+                className='flex w-1/5 overflow-auto items-center cursor-pointer'
+                onClick={() => handleClick('ultima_alteracao')}
+              >
+                <span>Última Alteração</span>
+                <span>{getArrow('ultima_alteracao')}</span>
+              </div>
+              <div
+                className='flex w-1/5 overflow-auto items-center cursor-pointer'
+                onClick={() => handleClick('status')}
+              >
+                <span>Status</span>
+                <span>{getArrow('status')}</span>
+              </div>
             </div>
             <span>Opções</span>
           </div>
@@ -92,10 +204,10 @@ const Pacientes = () => {
             ) : (
               <div className='flex justify-center p-20 gap-5 font-medium text-padrao-blue flex-col'>
                 <span className='flex justify-center text-3xl'>
-                  Paciente não encontrado.
+                  Paciente não encontrado
                 </span>
                 <span className='flex justify-center text-lg '>
-                  Verifique se o nome está correto.
+                  Verifique sua busca.
                 </span>
               </div>
             )}
