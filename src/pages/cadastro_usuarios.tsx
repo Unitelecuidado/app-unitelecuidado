@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import Notification from './components/Notification'
 import { allThing } from './Props/DefaultProps'
-import { createUser } from '../../service/userService'
+import { createUser } from '../../service/userservice'
 
 const PadraoTextField = styled(TextField)`
   input {

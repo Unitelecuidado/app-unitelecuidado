@@ -6,6 +6,7 @@ export interface Usuarios {
   senha: string
   cargo: string
   nome: string
+  especialidade: string
   ativo: boolean
 }
 
