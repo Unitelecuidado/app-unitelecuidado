@@ -52,7 +52,7 @@ const PendenciasCard = ({ paciente }: PropsPendenciasCard) => {
     <Link href={`/pacientes/editar/${paciente.id}`}>
       <div className='flex w-full flex-col justify-between bg-padrao-gray rounded-lg p-5 gap-8 cursor-pointer h-60'>
         <div className='flex flex-col gap-1 overflow-hidden whitespace-nowrap'>
-          <span className='text-padrao-blue font-medium text-xl overflow-hidden overflow-ellipsis'>
+          <span className='text-padrao-blue font-medium text-xl overflow-ellipsis'>
             {paciente.nome}
           </span>
           <span className='flex gap-2 items-center '>
