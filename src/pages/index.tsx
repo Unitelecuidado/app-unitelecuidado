@@ -1,4 +1,4 @@
-import { Button, TextField, styled } from '@mui/material'
+import { AlertColor, Button, TextField, styled } from '@mui/material'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
@@ -30,10 +30,11 @@ const PadraoTextField = styled(TextField)`
 const Login = () => {
   const [usuario, setUsuario] = useState('')
   const [senha, setSenha] = useState('')
-  const [isValid, setIsValid] = useState<boolean>()
   const [users, setUsers] = useState<Usuarios[]>([])
   const [state, setState] = useState(false)
-
+  const [isValid, setIsValid] = useState<boolean>(false)
+  const [message, setMessage] = useState('')
+  const [type, setType] = useState<AlertColor>('error')
   const router = useRouter()
 
   useEffect(() => {
@@ -58,6 +59,8 @@ const Login = () => {
     } else {
       setIsValid(true)
       setState(true)
+      setType('error')
+      setMessage('Email ou Senha incorretos.')
     }
   }
 
@@ -81,8 +84,8 @@ const Login = () => {
         </div>
         {isValid ? (
           <Notification
-            type='error'
-            message='mensagem de erro!!!'
+            type={type}
+            message={message}
             isOpen={state}
             setIsOpen={setState}
           ></Notification>
