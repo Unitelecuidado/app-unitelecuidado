@@ -30,6 +30,9 @@ const Layout = ({ children }: LayoutProps) => {
   useEffect(() => {
     if (user) {
       setUserData(JSON.parse(user))
+      setIsLogin(true)
+    } else {
+      setIsLogin(false)
     }
   }, [user])
 
@@ -38,6 +41,7 @@ const Layout = ({ children }: LayoutProps) => {
     const updateBodyClass = () => {
       if (router.pathname === '/') {
         document.body.className = 'bg-padrao-green-light'
+        setIsLogin(false)
       } else {
         document.body.className = 'bg-padrao-gray'
         setIsLogin(true)
@@ -52,24 +56,6 @@ const Layout = ({ children }: LayoutProps) => {
       router.events.off('routeChangeComplete', updateBodyClass)
     }
   }, [router.events, router.pathname, isLogin])
-
-  /*   const capitalizeName = () => {
-    if (userData?.length) {
-      const list = userData[0].nome.toUpperCase().split(' ')
-    }
-    return (
-      userData[0].nome.charAt(0).toUpperCase() +
-      userData[0].nome.slice(1).toLowerCase()
-    )
-  } */
-
-  const avatarName = () => {
-    if (userData?.length) {
-      const list = userData[0].nome.toUpperCase().split(' ')
-      return list[0].substring(0, 1) + list[1].substring(0, 1)
-    }
-    return ''
-  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -95,7 +81,8 @@ const Layout = ({ children }: LayoutProps) => {
                 <span>{capitalizeName()}</span>
               </div>
             </div> */}
-            <div className='py-8'>{children}</div>
+
+            <div className='pb-8'>{children}</div>
           </div>
         </div>
       )}

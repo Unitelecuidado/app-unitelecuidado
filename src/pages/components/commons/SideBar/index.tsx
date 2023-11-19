@@ -2,8 +2,8 @@ import {
   ContactPhoneOutlined,
   PersonAddAlt1Outlined,
   LibraryAddCheckOutlined,
-  AccountCircleOutlined,
   SettingsOutlined,
+  LogoutOutlined,
 } from '@mui/icons-material'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -29,6 +29,13 @@ const SideBar = () => {
   const isOnCadastroUsuariosPage = router.pathname === '/cadastro_usuarios'
 
   const isOnPendenciasPage = router.pathname === '/pendencias'
+
+  const isOnConfigPage = router.pathname === '/configuracoes'
+
+  const logout = () => {
+    cookies.remove('user')
+    router.push('/')
+  }
 
   return (
     <div className='flex bg-white h-tela w-1/4 md:w-1/6 shadow-md rounded-lg flex-col'>
@@ -137,21 +144,37 @@ const SideBar = () => {
             )
           ) : null}
 
-          <div className='hover:bg-padrao-green-light py-0.5 hover:cursor-not-allowed '>
-            <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
-              <span>
-                <AccountCircleOutlined />
-              </span>
-              <span className='font-normal'> Perfil </span>
+          {isOnConfigPage ? (
+            <div className='bg-padrao-green-light py-0.5 '>
+              <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
+                <span>
+                  <SettingsOutlined />
+                </span>
+                <span className='font-normal'> Configurações </span>
+              </div>
             </div>
-          </div>
+          ) : (
+            <Link href={'/configuracoes'}>
+              <div className='hover:bg-padrao-green-light py-0.5 hover:cursor-pointer '>
+                <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
+                  <span>
+                    <SettingsOutlined />
+                  </span>
+                  <span className='font-normal'> Configurações </span>
+                </div>
+              </div>
+            </Link>
+          )}
 
-          <div className='hover:bg-padrao-green-light py-0.5 hover:cursor-not-allowed '>
+          <div
+            className='hover:bg-padrao-green-light py-0.5 hover:cursor-pointer '
+            onClick={logout}
+          >
             <div className='text-md text-padrao-blue flex items-center gap-2 m-4 '>
               <span>
-                <SettingsOutlined />
+                <LogoutOutlined />
               </span>
-              <span className='font-normal'> Configurações </span>
+              <span className='font-normal'> Sair </span>
             </div>
           </div>
         </div>
