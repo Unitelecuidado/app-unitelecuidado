@@ -50,7 +50,7 @@ const Pendencias = () => {
           <div className=' flex flex-col max-h-full overflow-y-auto'>
             {buscando === '' ? (
               pacientes.length ? (
-                <div className='grid grid-cols-3 gap-12 '>
+                <div className='grid grid-cols-2 md:grid-cols-3 gap-12 '>
                   {pacientes.map(paciente => (
                     <PendenciasCard
                       key={paciente.id}
