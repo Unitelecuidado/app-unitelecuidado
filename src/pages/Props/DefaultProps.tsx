@@ -34,6 +34,9 @@ export interface NotificationProps {
   message: string
   isOpen: boolean
   setIsOpen: (value: boolean) => void
+  confirm?: boolean
+  setConfirm?: (value: boolean) => void
+  isDelete?: boolean
 }
 
 export interface allThing {

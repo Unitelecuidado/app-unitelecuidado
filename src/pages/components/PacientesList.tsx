@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
 import { ModalComponents, Pacientes } from '../Props/DefaultProps'
 import PacienteModal from './PacienteModal'
+import Notification from './Notification'
+import { AlertColor } from '@mui/material'
 
 interface PropsPacienteList {
   paciente: Pacientes
@@ -21,11 +23,30 @@ const PacientesList = ({
 }: PropsPacienteList) => {
   const [activeModal, setActiveModal] = useState<boolean>(false)
   const [modalComponentName, setModalComponentName] = useState('')
+  const [state, setState] = useState(false)
+  const [isValid, setIsValid] = useState<boolean>(false)
+  const [message, setMessage] = useState('')
+  const [type, setType] = useState<AlertColor>('error')
+  const [confirm, setConfirm] = useState<boolean>(false)
 
-  async function deletePacientes(id: number) {
-    await deletarPaciente(id)
-    setLoading(!loading)
+  async function deletePacientes() {
+    setIsValid(true)
+    setState(true)
+    setType('error')
+    setMessage('Você realmente deseja excluir este paciente?')
   }
+
+  const deletar = async (id: number) => {
+    if (confirm) {
+      if (await deletarPaciente(id)) {
+        setLoading(!loading)
+      }
+    }
+  }
+
+  useEffect(() => {
+    deletar(Number(paciente.id))
+  }, [confirm])
 
   const allDesfechos = [
     { nome: 'Atendido', value: 'ATENDIDO' },
@@ -84,6 +105,7 @@ const PacientesList = ({
     }
     return components[modalName]
   }
+
   return (
     <>
       <div
@@ -119,13 +141,25 @@ const PacientesList = ({
             <Edit />
           </Link>
           <div
-            onClick={() => deletePacientes(paciente.id)}
+            onClick={() => deletePacientes()}
             className='cursor-pointer'
           >
             <Delete />
           </div>
         </span>
       </div>
+      {isValid ? (
+        <Notification
+          type={type}
+          message={message}
+          isOpen={state}
+          setIsOpen={setState}
+          isDelete
+          setConfirm={setConfirm}
+          confirm={confirm}
+        ></Notification>
+      ) : null}
+
       <hr></hr>
       {activeModal && chooseModal(modalComponentName)}
     </>
