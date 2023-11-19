@@ -1,4 +1,4 @@
-import { Button, TextField, styled } from '@mui/material'
+import { AlertColor, Button, TextField, styled } from '@mui/material'
 import Head from 'next/head'
 import Notification from './components/Notification'
 
@@ -32,8 +32,10 @@ const Configuracoes = () => {
   const router = useRouter()
   const [senha, setSenha] = useState('')
   const [confirmaSenha, setConfirmaSenha] = useState('')
-  const [isValid, setIsValid] = useState<boolean>()
   const [state, setState] = useState(false)
+  const [isValid, setIsValid] = useState<boolean>(false)
+  const [message, setMessage] = useState('')
+  const [type, setType] = useState<AlertColor>('error')
   const [userData, setUserData] = useState<Usuarios[]>([])
 
   const user = cookies.get('user')
@@ -56,18 +58,26 @@ const Configuracoes = () => {
 
   const alterar = async () => {
     if (senha === confirmaSenha) {
-      try {
-        await updateUser(payload).then(() => {
-          cookies.remove('user')
-          router.push('/')
-        })
-      } catch (error) {
+      if (await updateUser(payload)) {
         setIsValid(true)
         setState(true)
+        setType('success')
+        setMessage('Senha alterada. Deslogando...')
+        setTimeout(() => {
+          cookies.remove('user')
+          router.push('/')
+        }, 2000)
+      } else {
+        setIsValid(true)
+        setState(true)
+        setType('error')
+        setMessage('Preencha os campos.')
       }
     } else {
       setIsValid(true)
       setState(true)
+      setType('error')
+      setMessage('A confirmação de senha não confere.')
     }
   }
   return (
@@ -81,8 +91,8 @@ const Configuracoes = () => {
         </span>
         {isValid ? (
           <Notification
-            type='error'
-            message='mensagem de erro !!!'
+            type={type}
+            message={message}
             isOpen={state}
             setIsOpen={setState}
           ></Notification>

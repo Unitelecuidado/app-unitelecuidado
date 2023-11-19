@@ -14,11 +14,11 @@ const Notification = ({
 
   const setAlertTitle = () => {
     if (type === 'error') {
-      return <AlertTitle> Erro </AlertTitle>
+      return <AlertTitle className='font-bold'> Erro </AlertTitle>
     } else if (type === 'success') {
-      return <AlertTitle> Sucesso </AlertTitle>
+      return <AlertTitle className='font-bold'> Sucesso </AlertTitle>
     } else if (type === 'warning') {
-      return <AlertTitle> Atenção </AlertTitle>
+      return <AlertTitle className='font-bold'> Atenção </AlertTitle>
     }
   }
 
@@ -29,11 +29,7 @@ const Notification = ({
       open={isOpen}
       onClose={handleChange}
     >
-      <Alert
-        onClose={handleChange}
-        severity={type}
-        sx={{ width: '100%' }}
-      >
+      <Alert onClose={handleChange} severity={type} sx={{ width: '100%' }}>
         {setAlertTitle()}
         {message}
       </Alert>

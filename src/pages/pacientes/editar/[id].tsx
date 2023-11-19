@@ -1,5 +1,6 @@
 import Notification from '@/pages/components/Notification'
 import {
+  AlertColor,
   Autocomplete,
   Button,
   Switch,
@@ -7,16 +8,13 @@ import {
   styled,
 } from '@mui/material'
 import { useRouter } from 'next/router'
-import InputMask from 'react-input-mask'
-
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import {
   editarPaciente,
   getPacientesById,
 } from '../../../../service/pacientesService'
-import Link from 'next/link'
-
+import ReactInputMask from 'react-input-mask'
 const PadraoTextField = styled(TextField)`
   input {
     color: #184066 !important; /* Defina a cor do texto */
@@ -62,8 +60,10 @@ const EditarPaciente = () => {
     value: string
   } | null>(null)
 
-  const [isValid, setIsValid] = useState<boolean>()
   const [state, setState] = useState(false)
+  const [isValid, setIsValid] = useState<boolean>(false)
+  const [message, setMessage] = useState('')
+  const [type, setType] = useState<AlertColor>('error')
   const [dateTime, setDateTime] = useState('')
 
   useEffect(() => {
@@ -72,9 +72,11 @@ const EditarPaciente = () => {
   }, [])
 
   useEffect(() => {
-    getPacientePorId()
+    if (id) {
+      getPacientePorId()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [id])
 
   async function getPacientePorId() {
     const data = await getPacientesById(Number(id))
@@ -159,18 +161,20 @@ const EditarPaciente = () => {
   ]
 
   const editar = async () => {
-    await editarPaciente(payload)
-      .then(() => {
-        setIsValid(true)
-        setState(true)
-        setTimeout(() => {
-          router.back()
-        }, 1000)
-      })
-      .catch(() => {
-        setIsValid(false)
-        setState(false)
-      })
+    if (await editarPaciente(payload)) {
+      setIsValid(true)
+      setState(true)
+      setType('success')
+      setMessage('Alterações salvas com sucesso.')
+      setTimeout(() => {
+        router.back()
+      }, 1000)
+    } else {
+      setIsValid(true)
+      setState(true)
+      setType('error')
+      setMessage('Verifique os campos obrigatórios (*)')
+    }
   }
 
   return (
@@ -185,8 +189,8 @@ const EditarPaciente = () => {
           </span>
           {isValid ? (
             <Notification
-              type='success'
-              message='mensagem de sucesso!!!'
+              type={type}
+              message={message}
               isOpen={state}
               setIsOpen={setState}
             ></Notification>
@@ -215,31 +219,28 @@ const EditarPaciente = () => {
             </div>
             <div className='flex gap-10 w-full'>
               <div className='bg-padrao-gray rounded-md w-1/2'>
-                <InputMask
+                <ReactInputMask
                   mask='(99) 99999-9999'
                   value={telefone}
                   onChange={e => setTelefone(e.target.value)}
                 >
-                  {() => (
-                    // this error is intentional
-                    <PadraoTextField
-                      required
-                      type='tel'
-                      label='Telefone'
-                      value={telefone}
-                      sx={{
-                        '.MuiFormLabel-root': {
-                          alignItems: 'center',
-                          display: 'flex',
-                          height: '25px',
-                          color: '#184066',
-                          fontWeight: 600,
-                        },
-                        width: '100%',
-                      }}
-                    />
-                  )}
-                </InputMask>
+                  <PadraoTextField
+                    required
+                    type='tel'
+                    label='Telefone'
+                    value={telefone}
+                    sx={{
+                      '.MuiFormLabel-root': {
+                        alignItems: 'center',
+                        display: 'flex',
+                        height: '25px',
+                        color: '#184066',
+                        fontWeight: 600,
+                      },
+                      width: '100%',
+                    }}
+                  />
+                </ReactInputMask>
               </div>
               <div className='bg-padrao-gray rounded-md w-1/2'>
                 <PadraoTextField
@@ -494,6 +495,7 @@ const EditarPaciente = () => {
                   <PadraoTextField
                     {...params}
                     label='Origem'
+                    required
                     variant='outlined'
                     sx={{
                       '.MuiFormLabel-root': {
@@ -536,7 +538,7 @@ const EditarPaciente = () => {
             className={`bg-padrao-blue w-36 capitalize`}
             onClick={editar}
           >
-            Editar
+            Salvar
           </Button>
         </div>
       </div>

@@ -1,9 +1,15 @@
-import { Autocomplete, Button, TextField, styled } from '@mui/material'
+import {
+  AlertColor,
+  Autocomplete,
+  Button,
+  TextField,
+  styled,
+} from '@mui/material'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { cadastrarPaciente } from '../../service/pacientesService'
 import Notification from './components/Notification'
-import InputMask from 'react-input-mask'
+import ReactInputMask from 'react-input-mask'
 
 const PadraoTextField = styled(TextField)`
   input {
@@ -28,8 +34,10 @@ const CadastroPacientes = () => {
   const [nome, setNome] = useState('')
   const [telefone, setTelefone] = useState('')
   const [origem, setOrigem] = useState<string | null>('')
-  const [isValid, setIsValid] = useState<boolean>()
   const [state, setState] = useState(false)
+  const [isValid, setIsValid] = useState<boolean>(false)
+  const [message, setMessage] = useState('')
+  const [type, setType] = useState<AlertColor>('error')
   const [dateTime, setDateTime] = useState('')
 
   useEffect(() => {
@@ -54,18 +62,20 @@ const CadastroPacientes = () => {
   ]
 
   const cadastrar = async () => {
-    await cadastrarPaciente(payload)
-      .then(() => {
-        setIsValid(true)
-        setState(true)
-        setNome('')
-        setTelefone('')
-        setOrigem('')
-      })
-      .catch(() => {
-        setIsValid(false)
-        setState(false)
-      })
+    if (await cadastrarPaciente(payload)) {
+      setIsValid(true)
+      setState(true)
+      setType('success')
+      setMessage('Paciente cadastrado com sucesso.')
+      setNome('')
+      setTelefone('')
+      setOrigem('')
+    } else {
+      setIsValid(true)
+      setState(true)
+      setType('error')
+      setMessage('Todos os campos são obrigatórios.')
+    }
   }
 
   return (
@@ -79,8 +89,8 @@ const CadastroPacientes = () => {
         </span>
         {isValid ? (
           <Notification
-            type='success'
-            message='mensagem de sucesso!!!'
+            type={type}
+            message={message}
             isOpen={state}
             setIsOpen={setState}
           ></Notification>
@@ -89,6 +99,7 @@ const CadastroPacientes = () => {
           <div className='bg-padrao-gray rounded-md'>
             <PadraoTextField
               type='String'
+              required
               onChange={event => {
                 setNome(event.target.value)
               }}
@@ -107,30 +118,28 @@ const CadastroPacientes = () => {
             />
           </div>
           <div className='bg-padrao-gray rounded-md'>
-            <InputMask
+            <ReactInputMask
               mask='(99) 99999-9999'
               value={telefone}
               onChange={e => setTelefone(e.target.value)}
             >
-              {() => (
-                // this error is intentional
-                <PadraoTextField
-                  type='tel'
-                  label='Telefone'
-                  value={telefone}
-                  sx={{
-                    '.MuiFormLabel-root': {
-                      alignItems: 'center',
-                      display: 'flex',
-                      height: '25px',
-                      color: '#184066',
-                      fontWeight: 600,
-                    },
-                    width: '100%',
-                  }}
-                />
-              )}
-            </InputMask>
+              <PadraoTextField
+                type='tel'
+                required
+                label='Telefone'
+                value={telefone}
+                sx={{
+                  '.MuiFormLabel-root': {
+                    alignItems: 'center',
+                    display: 'flex',
+                    height: '25px',
+                    color: '#184066',
+                    fontWeight: 600,
+                  },
+                  width: '100%',
+                }}
+              />
+            </ReactInputMask>
           </div>
           <div className='bg-padrao-gray rounded-md'>
             <Autocomplete
@@ -144,6 +153,7 @@ const CadastroPacientes = () => {
               renderInput={params => (
                 <PadraoTextField
                   {...params}
+                  required
                   label='Origem'
                   variant='outlined'
                   sx={{

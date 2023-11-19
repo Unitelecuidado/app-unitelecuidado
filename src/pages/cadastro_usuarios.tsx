@@ -1,4 +1,10 @@
-import { Autocomplete, Button, TextField, styled } from '@mui/material'
+import {
+  AlertColor,
+  Autocomplete,
+  Button,
+  TextField,
+  styled,
+} from '@mui/material'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import Notification from './components/Notification'
@@ -29,8 +35,10 @@ const CadastroUsuarios = () => {
   const [email, setEmail] = useState('')
   const [especialidade, setEspecialidade] = useState<allThing | null>(null)
   const [cargo, setCargo] = useState<allThing | null>(null)
-  const [isValid, setIsValid] = useState<boolean>()
   const [state, setState] = useState(false)
+  const [isValid, setIsValid] = useState<boolean>(false)
+  const [message, setMessage] = useState('')
+  const [type, setType] = useState<AlertColor>('error')
   const [dateTime, setDateTime] = useState('')
 
   useEffect(() => {
@@ -62,19 +70,21 @@ const CadastroUsuarios = () => {
   ]
 
   const cadastrar = async () => {
-    await createUser(payload)
-      .then(() => {
-        setIsValid(true)
-        setState(true)
-        setNome('')
-        setEmail('')
-        setEspecialidade(null)
-        setCargo(null)
-      })
-      .catch(() => {
-        setIsValid(false)
-        setState(false)
-      })
+    if (await createUser(payload)) {
+      setIsValid(true)
+      setState(true)
+      setNome('')
+      setEmail('')
+      setEspecialidade(null)
+      setCargo(null)
+      setType('success')
+      setMessage('Usuário cadastrado com sucesso.')
+    } else {
+      setIsValid(true)
+      setState(true)
+      setType('error')
+      setMessage('Todos os campos são obrigatórios.')
+    }
   }
 
   return (
@@ -88,8 +98,8 @@ const CadastroUsuarios = () => {
         </span>
         {isValid ? (
           <Notification
-            type='success'
-            message='mensagem de sucesso!!!'
+            type={type}
+            message={message}
             isOpen={state}
             setIsOpen={setState}
           ></Notification>
