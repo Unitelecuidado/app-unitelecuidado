@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Snackbar } from '@mui/material'
+import { Alert, AlertTitle, Button, Snackbar } from '@mui/material'
 import React from 'react'
 import { NotificationProps } from '../Props/DefaultProps'
 
@@ -7,8 +7,15 @@ const Notification = ({
   message,
   isOpen,
   setIsOpen,
+  isDelete,
+  confirm,
+  setConfirm,
 }: NotificationProps) => {
   const handleChange = () => {
+    setIsOpen(false)
+  }
+  const handleConfirm = () => {
+    setConfirm && setConfirm(!confirm)
     setIsOpen(false)
   }
 
@@ -25,13 +32,28 @@ const Notification = ({
   return (
     <Snackbar
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      autoHideDuration={3000}
+      autoHideDuration={isDelete ? null : 3000}
       open={isOpen}
       onClose={handleChange}
     >
-      <Alert onClose={handleChange} severity={type} sx={{ width: '100%' }}>
-        {setAlertTitle()}
-        {message}
+      <Alert
+        onClose={handleChange}
+        severity={type}
+        sx={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <div className='flex flex-col justify-start'>
+          {setAlertTitle()}
+          {message}
+          {isDelete && (
+            <Button color='inherit' size='small' onClick={handleConfirm}>
+              Confirmar
+            </Button>
+          )}
+        </div>
       </Alert>
     </Snackbar>
   )
