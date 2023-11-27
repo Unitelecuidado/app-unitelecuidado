@@ -87,14 +87,14 @@ const Pacientes = () => {
     if (pacientes) {
       if (orderSorting) {
         sorted = pacientes?.sort((a, b) =>
-          (a[option as keyof Pacientes] as string).localeCompare(
+          (a[option as keyof Pacientes] as string)?.localeCompare(
             b[option as keyof Pacientes] as string
           )
         )
       }
       if (!orderSorting) {
         sorted = pacientes?.sort((a, b) =>
-          (b[option as keyof Pacientes] as string).localeCompare(
+          (b[option as keyof Pacientes] as string)?.localeCompare(
             a[option as keyof Pacientes] as string
           )
         )
