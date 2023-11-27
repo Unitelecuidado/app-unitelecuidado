@@ -70,80 +70,103 @@ const Login = () => {
         <title>Unitelecuidado</title>
       </Head>
 
-      <div className='w-full h-tela flex mx-40 items-center gap-24 flex-col md:flex-row'>
-        <div className='w-full md:w-1/2 flex justify-center'>
-          <div className='pt-10 md:pt-0'>
-            <Image
-              src='/logos/logoVertical.png'
-              alt='Icone'
-              width={300}
-              height={300}
-              priority
-            />
+      <div className='w-full h-tela flex mx-40 items-center gap-24'>
+        <div className='flex w-full items-center'>
+          <div className='w-full md:w-1/2 flex justify-center'>
+            <div className='pt-10 md:pt-0'>
+              <Image
+                src='/logos/logoVertical.png'
+                alt='Icone'
+                width={300}
+                height={300}
+                priority
+              />
+            </div>
+          </div>
+          {isValid ? (
+            <Notification
+              type={type}
+              message={message}
+              isOpen={state}
+              setIsOpen={setState}
+            ></Notification>
+          ) : null}
+          <div className=' w-full md:w-1/2 flex justify-center items-center'>
+            <div className=' flex w-4/5 items-center bg-padrao-green rounded-2xl justify-center p-10'>
+              <div className='flex flex-col gap-5 w-5/6'>
+                <div className='bg-white rounded-md shadow-md'>
+                  <PadraoTextField
+                    type='String'
+                    onChange={event => {
+                      setUsuario(event.target.value)
+                    }}
+                    value={usuario}
+                    placeholder='Email'
+                    sx={{
+                      '.MuiFormLabel-root': {
+                        alignItems: 'center',
+                        display: 'flex',
+                        height: '25px',
+                        color: '#184066',
+                        fontWeight: 500,
+                      },
+                      width: '100%',
+                    }}
+                  />
+                </div>
+                <div className='bg-white rounded-md shadow-md'>
+                  <PadraoTextField
+                    type='password'
+                    autoComplete='current-password'
+                    onChange={event => {
+                      setSenha(event.target.value)
+                    }}
+                    value={senha}
+                    placeholder='Senha'
+                    sx={{
+                      '.MuiFormLabel-root': {
+                        alignItems: 'center',
+                        display: 'flex',
+                        height: '25px',
+                        color: '#184066',
+                        fontWeight: 500,
+                      },
+                      width: '100%',
+                    }}
+                  />
+                </div>
+                <div className='rounded-md flex justify-center'>
+                  <Button
+                    variant='contained'
+                    className={`bg-padrao-blue w-36`}
+                    onClick={validateLogin}
+                  >
+                    Entrar
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        {isValid ? (
-          <Notification
-            type={type}
-            message={message}
-            isOpen={state}
-            setIsOpen={setState}
-          ></Notification>
-        ) : null}
-
-        <div className=' w-full md:w-1/2 flex justify-center items-center'>
-          <div className=' flex w-4/5 items-center bg-padrao-green rounded-2xl justify-center p-10'>
-            <div className='flex flex-col gap-5 w-5/6'>
-              <div className='bg-white rounded-md shadow-md'>
-                <PadraoTextField
-                  type='String'
-                  onChange={event => {
-                    setUsuario(event.target.value)
-                  }}
-                  value={usuario}
-                  placeholder='Email'
-                  sx={{
-                    '.MuiFormLabel-root': {
-                      alignItems: 'center',
-                      display: 'flex',
-                      height: '25px',
-                      color: '#184066',
-                      fontWeight: 500,
-                    },
-                    width: '100%',
-                  }}
-                />
-              </div>
-              <div className='bg-white rounded-md shadow-md'>
-                <PadraoTextField
-                  type='password'
-                  autoComplete='current-password'
-                  onChange={event => {
-                    setSenha(event.target.value)
-                  }}
-                  value={senha}
-                  placeholder='Senha'
-                  sx={{
-                    '.MuiFormLabel-root': {
-                      alignItems: 'center',
-                      display: 'flex',
-                      height: '25px',
-                      color: '#184066',
-                      fontWeight: 500,
-                    },
-                    width: '100%',
-                  }}
-                />
-              </div>
-              <div className='rounded-md flex justify-center'>
-                <Button
-                  variant='contained'
-                  className={`bg-padrao-blue w-36`}
-                  onClick={validateLogin}
-                >
-                  Entrar
-                </Button>
-              </div>
+        <div className='fixed bottom-0 left-0 w-full h-1/6 bg-padrao-blue'>
+          <div className='flex justify-end items-center'>
+            <div className='pt-10 md:pt-0'>
+              <Image
+                src='/logos/logoInfobio.png'
+                alt='Icone'
+                width={200}
+                height={200}
+                priority
+              />
+            </div>
+            <div className='pt-10 md:pt-0'>
+              <Image
+                src='/logos/ufcspa.png'
+                alt='Icone'
+                width={200}
+                height={200}
+                priority
+              />
             </div>
           </div>
         </div>
